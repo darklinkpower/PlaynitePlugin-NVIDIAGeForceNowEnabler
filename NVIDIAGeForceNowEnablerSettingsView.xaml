@@ -21,6 +21,6 @@
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
                   Margin="0,0,0,15"
                   IsChecked="{Binding SetEnabledGamesAsInstalled}"
-                  Content="Set enabled games as Installed when updating enabled status of games"/>
+                  Content="Set enabled games as installed when updating enabled status of games"/>
     </StackPanel>
 </UserControl>
