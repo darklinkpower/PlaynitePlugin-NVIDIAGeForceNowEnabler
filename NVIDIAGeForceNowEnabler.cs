@@ -283,11 +283,11 @@ namespace NVIDIAGeForceNowEnabler
 
             if (showDialogs == true)
             {
-                string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}`n`nAdded \"{1}\" feature to {2} games`nRemoved \"{3}\" feature from {4} games",
+                string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}\n\nAdded \"{1}\" feature to {2} games\nRemoved \"{3}\" feature from {4} games",
                     enabledGamesCount, featureName, playActionAddedCount, featureName, playActionRemovedCount);
                 if (settings.UpdatePlayActions == true)
                 {
-                    results += String.Format("`n`nPlay Action added to {0} games`nPlay Action removed from {1} games",
+                    results += String.Format("\n\nPlay Action added to {0} games\nPlay Action removed from {1} games",
                         playActionAddedCount, playActionRemovedCount);
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
