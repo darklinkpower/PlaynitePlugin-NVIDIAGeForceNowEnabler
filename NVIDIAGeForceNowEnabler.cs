@@ -68,7 +68,10 @@ namespace NVIDIAGeForceNowEnabler
 
         public override void OnLibraryUpdated()
         {
-            // Add code to be executed when library is updated.
+            if (settings.ExecuteOnStartup == true)
+            {
+                MainMethod(false);
+            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
