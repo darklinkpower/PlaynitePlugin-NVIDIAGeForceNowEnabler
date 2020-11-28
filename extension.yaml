@@ -1,0 +1,7 @@
+﻿Id: NVIDIAGeForceNowEnabler_5f2dfd12-5f13-46fe-bcdd-64eb53ace26a
+Name: My first C# Plugin
+Author: John Doe
+Version: 1.0
+Module: NVIDIAGeForceNowEnabler.dll
+Type: GenericPlugin
+Icon: icon.png
