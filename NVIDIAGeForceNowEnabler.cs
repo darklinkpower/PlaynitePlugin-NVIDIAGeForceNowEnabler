@@ -214,7 +214,7 @@ namespace NVIDIAGeForceNowEnabler
 
         public void MainMethod(bool showDialogs)
         {
-            string featureName = "Plugin test feature";
+            string featureName = "NVIDIA GeForce NOW";
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
 
             string localAppData = Environment.GetEnvironmentVariable("LocalAppData");
