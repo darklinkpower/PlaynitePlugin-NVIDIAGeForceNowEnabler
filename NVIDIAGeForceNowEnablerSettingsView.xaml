@@ -9,14 +9,14 @@
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnStartup"
                   Margin="0,0,0,15"
                   IsChecked="{Binding ExecuteOnStartup}"
-                  Content="Execute function on Playnite startup"/>
+                  Content="Check for enabled games on Playnite startup"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnLibraryUpdate"
                   Margin="0,0,0,15"
                   IsChecked="{Binding ExecuteOnLibraryUpdate}"
-                  Content="Execute function on library update"/>
+                  Content="Check for enabled games on library update"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckUpdatePlayActions"
                   Margin="0,0,0,15"
                   IsChecked="{Binding UpdatePlayActions}"
-                  Content="Update Play actions when executing the plugin function"/>
+                  Content="Update Play actions when checking for enabled games"/>
     </StackPanel>
 </UserControl>

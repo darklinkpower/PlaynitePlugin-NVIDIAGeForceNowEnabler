@@ -159,7 +159,6 @@ namespace NVIDIAGeForceNowEnabler
                 string result = null;
                 return result;
             }
-            
         }
         public List<GeforceGame> DownloadGameList(string uri, bool showDialogs)
         {
