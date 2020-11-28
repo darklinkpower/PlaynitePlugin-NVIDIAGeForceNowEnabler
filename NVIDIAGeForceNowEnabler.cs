@@ -129,7 +129,7 @@ namespace NVIDIAGeForceNowEnabler
             GameAction geforceNowAction = null;
             if (game.OtherActions != null)
             {
-                geforceNowAction = game.OtherActions.Where(x => x.Arguments != null).Where(x => Regex.IsMatch(x.Arguments, @"--url-route=""#\?cmsId=d+&launchSource=External""")).FirstOrDefault();
+                geforceNowAction = game.OtherActions.Where(x => x.Arguments != null).Where(x => Regex.IsMatch(x.Arguments, @"--url-route=""#\?cmsId=\d+&launchSource=External""")).FirstOrDefault();
             }
 
             if (supportedGame == null && geforceNowAction != null)
