@@ -55,6 +55,10 @@ namespace NVIDIAGeForceNowEnabler
         public override void OnApplicationStarted()
         {
             // Add code to be executed when Playnite is initialized.
+            if (settings.ExecuteOnStartup == true)
+            {
+                MainMethod(true);
+            }
         }
 
         public override void OnApplicationStopped()
@@ -86,7 +90,7 @@ namespace NVIDIAGeForceNowEnabler
                     Description = "Update game features",
                     MenuSection = "@Nvidia GeForce NOW Enabler",
                     Action = args => {
-                        MainMethod();
+                        MainMethod(false);
                     }
                 },
             };
@@ -183,18 +187,16 @@ namespace NVIDIAGeForceNowEnabler
             }
         }
 
-        public void MainMethod()
+        public void MainMethod(bool showDialogs)
         {
 
             GameFeature feature = PlayniteApi.Database.Features.Add("My Test Feature...");
-
-            bool updatePlayActions = true;
 
             string localAppData = Environment.GetEnvironmentVariable("LocalAppData");
             string[] paths = { localAppData, "NVIDIA Corporation", "GeForceNOW", "CEF" };
             string geforceNowWorkingPath = Path.Combine(paths);
             string geforceNowExecutablePath = geforceNowWorkingPath + "\\GeForceNOWStreamer.exe";
-                        
+            
             var supportedGames = DownloadGameList("https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json");
             if (supportedGames.Count() == 0)
             {
@@ -246,7 +248,7 @@ namespace NVIDIAGeForceNowEnabler
                     AddFeature(game, feature);
                 }
 
-                if (updatePlayActions == true)
+                if (settings.UpdatePlayActions == true)
                 {
                     AddNvidiaAction(game, supportedGame, geforceNowWorkingPath, geforceNowExecutablePath);
                 }

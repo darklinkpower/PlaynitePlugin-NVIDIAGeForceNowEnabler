@@ -12,9 +12,9 @@ namespace NVIDIAGeForceNowEnabler
     {
         private readonly NVIDIAGeForceNowEnabler plugin;
 
-        public string Option1 { get; set; } = string.Empty;
+        public bool ExecuteOnStartup { get; set; } = false;
 
-        public bool Option2 { get; set; } = false;
+        public bool UpdatePlayActions { get; set; } = false;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -37,8 +37,8 @@ namespace NVIDIAGeForceNowEnabler
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
-                Option1 = savedSettings.Option1;
-                Option2 = savedSettings.Option2;
+                ExecuteOnStartup = savedSettings.ExecuteOnStartup;
+                UpdatePlayActions = savedSettings.UpdatePlayActions;
             }
         }
 
