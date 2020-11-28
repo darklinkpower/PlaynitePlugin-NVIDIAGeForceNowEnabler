@@ -27,43 +27,12 @@ namespace NVIDIAGeForceNowEnabler
             settings = new NVIDIAGeForceNowEnablerSettings(this);
         }
 
-        public override void OnGameInstalled(Game game)
-        {
-            // Add code to be executed when game is finished installing.
-        }
-
-        public override void OnGameStarted(Game game)
-        {
-            // Add code to be executed when game is started running.
-        }
-
-        public override void OnGameStarting(Game game)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameStopped(Game game, long elapsedSeconds)
-        {
-            // Add code to be executed when game is preparing to be started.
-        }
-
-        public override void OnGameUninstalled(Game game)
-        {
-            // Add code to be executed when game is uninstalled.
-        }
-
         public override void OnApplicationStarted()
         {
-            // Add code to be executed when Playnite is initialized.
             if (settings.ExecuteOnStartup == true)
             {
                 MainMethod(false);
             }
-        }
-
-        public override void OnApplicationStopped()
-        {
-            // Add code to be executed when Playnite is shutting down.
         }
 
         public override void OnLibraryUpdated()
