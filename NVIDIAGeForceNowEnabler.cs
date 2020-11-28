@@ -129,7 +129,7 @@ namespace NVIDIAGeForceNowEnabler
             GameAction geforceNowAction = null;
             if (game.OtherActions != null)
             {
-                geforceNowAction = game.OtherActions.Where(x => Regex.IsMatch(x.Arguments, @"--url-route=""#\?cmsId=d+&launchSource=External""")).FirstOrDefault();
+                geforceNowAction = game.OtherActions.Where(x => x.Arguments != null).Where(x => Regex.IsMatch(x.Arguments, @"--url-route=""#\?cmsId=d+&launchSource=External""")).FirstOrDefault();
             }
 
             if (supportedGame == null && geforceNowAction != null)
@@ -144,7 +144,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 GameAction nvidiaGameAction = new GameAction();
                 nvidiaGameAction.Name = "Launch in Nvidia GeForce NOW";
-                var playActionArguments = String.Format("--url-route=\"#?cmsId={0}&launchSource=External`\"", supportedGame.id);
+                var playActionArguments = String.Format("--url-route=\"#?cmsId={0}&launchSource=External\"", supportedGame.id);
                 nvidiaGameAction.Arguments = playActionArguments;
                 nvidiaGameAction.Path = geforceNowExecutablePath;
                 nvidiaGameAction.WorkingDir = geforceNowWorkingPath;
