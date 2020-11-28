@@ -59,7 +59,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 new MainMenuItem
                 {
-                    Description = "Update game features",
+                    Description = "Update enabled status of games",
                     MenuSection = "@Nvidia GeForce NOW Enabler",
                     Action = args => {
                         MainMethod(true);
@@ -238,6 +238,7 @@ namespace NVIDIAGeForceNowEnabler
             int playActionAddedCount = 0;
             int playActionRemovedCount = 0;
             int setAsInstalledCount = 0;
+            int setAsUninstalledCount = 0;
 
             var gameDatabase = GetGamesSupportedLibraries();
             foreach (var game in gameDatabase)
@@ -270,6 +271,14 @@ namespace NVIDIAGeForceNowEnabler
                     {
                         featureRemovedCount++; 
                         logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Feature removed from \"{0}\"", game.Name));
+
+                        if (settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == true)
+                        {
+                            game.IsInstalled = true;
+                            setAsUninstalledCount++;
+                            PlayniteApi.Database.Games.Update(game);
+                            logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Set \"{0}\" as uninstalled", game.Name));
+                        }
                     }
                 }
                 
@@ -317,7 +326,7 @@ namespace NVIDIAGeForceNowEnabler
                 }
                 if (settings.SetEnabledGamesAsInstalled == true)
                 {
-                    results += String.Format("\n\nSet {0} games as Installed.", setAsInstalledCount);
+                    results += String.Format("\n\nSet {0} games as Installed.\nSet {1} games as uninstalled.", setAsInstalledCount, setAsUninstalledCount);
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
             }

@@ -9,18 +9,18 @@
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnStartup"
                   Margin="0,0,0,15"
                   IsChecked="{Binding ExecuteOnStartup}"
-                  Content="Check for enabled games on Playnite startup"/>
+                  Content="Update enabled status of games on Playnite startup"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnLibraryUpdate"
                   Margin="0,0,0,15"
                   IsChecked="{Binding ExecuteOnLibraryUpdate}"
-                  Content="Check for enabled games on library update"/>
+                  Content="Update enabled status of games on library update"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckUpdatePlayActions"
                   Margin="0,0,0,15"
                   IsChecked="{Binding UpdatePlayActions}"
-                  Content="Update Play actions when checking for enabled games"/>
+                  Content="Update Play actions when updating enabled status of games"/>
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
                   Margin="0,0,0,15"
                   IsChecked="{Binding SetEnabledGamesAsInstalled}"
-                  Content="Set enabled games as Installed when checking for enabled games"/>
+                  Content="Set enabled games as Installed when updating enabled status of games"/>
     </StackPanel>
 </UserControl>
