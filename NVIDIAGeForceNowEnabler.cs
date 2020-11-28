@@ -57,7 +57,7 @@ namespace NVIDIAGeForceNowEnabler
             // Add code to be executed when Playnite is initialized.
             if (settings.ExecuteOnStartup == true)
             {
-                MainMethod(true);
+                MainMethod(false);
             }
         }
 
@@ -90,7 +90,7 @@ namespace NVIDIAGeForceNowEnabler
                     Description = "Update game features",
                     MenuSection = "@Nvidia GeForce NOW Enabler",
                     Action = args => {
-                        MainMethod(false);
+                        MainMethod(true);
                     }
                 },
             };
