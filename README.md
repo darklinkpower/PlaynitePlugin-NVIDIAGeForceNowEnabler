@@ -4,7 +4,7 @@ Plugin for [Playnite](https://github.com/JosefNemec/Playnite) that checks for ga
 Playnite forum thread: https://playnite.link/forum/thread-298.html
 
 ## Instalation 
-1. Download the latest packaged `pext` theme file from the [Releases page.](https://github.com/darklinkpower/PlaynitePlugin-NVIDIAGeForceNowEnabler/releases/latest)
+1. Download the latest packaged `pext` extension file from the [Releases page.](https://github.com/darklinkpower/PlaynitePlugin-NVIDIAGeForceNowEnabler/releases/latest)
 2. Open it to automatically install on Playnite or drag and drop it to the main Playnite window to start installation.
 
 ## Functionalities and features
