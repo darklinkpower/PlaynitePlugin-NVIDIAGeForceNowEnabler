@@ -167,6 +167,7 @@ namespace NVIDIAGeForceNowEnabler
             try
             {
                 WebClient webClient = new WebClient();
+                webClient.Encoding = Encoding.UTF8;
                 string downloadedString = webClient.DownloadString(uri);
                 supportedGames = JsonConvert.DeserializeObject<List<GeforceGame>>(downloadedString);
                 foreach (var supportedGame in supportedGames)
