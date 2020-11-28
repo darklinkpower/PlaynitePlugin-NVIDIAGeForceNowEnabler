@@ -199,9 +199,21 @@ namespace NVIDIAGeForceNowEnabler
             }
         }
 
+        public IEnumerable<Game> GetGamesSupportedLibraries()
+        {
+            List<Guid> supportedLibraries = new List<Guid>() {
+                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary),
+                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary),
+                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary),
+                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.UplayLibrary)
+            };
+
+            var gameDatabase = PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
+            return gameDatabase;
+        }
+
         public void MainMethod(bool showDialogs)
         {
-
             string featureName = "Plugin test feature";
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
 
@@ -220,20 +232,14 @@ namespace NVIDIAGeForceNowEnabler
             var supportedOriginGames = supportedGames.Where(g => g.store == "Origin");
             var supportedUplayGames = supportedGames.Where(g => g.store == "UPLAY");
 
-            List<Guid> supportedLibraries = new List<Guid>() {
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.UplayLibrary)
-            };
-
             int enabledGamesCount = 0; 
             int featureAddedCount = 0;
             int featureRemovedCount = 0;
             int playActionAddedCount = 0;
             int playActionRemovedCount = 0;
+            int setAsInstalledCount = 0;
 
-            var gameDatabase = PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
+            var gameDatabase = GetGamesSupportedLibraries();
             foreach (var game in gameDatabase)
             {
                 var gameName = Regex.Replace(game.Name, @"[^\p{L}\p{Nd}]", "").ToLower();
@@ -263,7 +269,7 @@ namespace NVIDIAGeForceNowEnabler
                     if (featureRemoved == true)
                     {
                         featureRemovedCount++; 
-                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Feature removed from {0}", game.Name));
+                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Feature removed from \"{0}\"", game.Name));
                     }
                 }
                 
@@ -274,7 +280,14 @@ namespace NVIDIAGeForceNowEnabler
                     if (featureAdded == true)
                     {
                         featureAddedCount++;
-                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Feature added to {0}", game.Name));
+                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Feature added to \"{0}\"", game.Name));
+                    }
+                    if (settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == false)
+                    {
+                        game.IsInstalled = true;
+                        setAsInstalledCount++;
+                        PlayniteApi.Database.Games.Update(game);
+                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Set \"{0}\" as installed", game.Name));
                     }
                 }
 
@@ -284,24 +297,27 @@ namespace NVIDIAGeForceNowEnabler
                     if (updatePlayAction == "playActionAdded")
                     {
                         playActionAddedCount++; 
-                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action added to {0}", game.Name));
+                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action added to \"{0}\"", game.Name));
                     }
                     else if (updatePlayAction == "playActionRemoved")
                     {
                         playActionRemovedCount++; 
-                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action removed from {0}", game.Name));
+                        logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action removed from \"{0}\"", game.Name));
                     }
                 }
             }
-
             if (showDialogs == true)
             {
-                string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}\n\nAdded \"{1}\" feature to {2} games\nRemoved \"{3}\" feature from {4} games",
+                string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}\n\nAdded \"{1}\" feature to {2} games.\nRemoved \"{3}\" feature from {4} games.",
                     enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
                 if (settings.UpdatePlayActions == true)
                 {
-                    results += String.Format("\n\nPlay Action added to {0} games\nPlay Action removed from {1} games",
+                    results += String.Format("\n\nPlay Action added to {0} games.\nPlay Action removed from {1} games.",
                         playActionAddedCount, playActionRemovedCount);
+                }
+                if (settings.SetEnabledGamesAsInstalled == true)
+                {
+                    results += String.Format("\n\nSet {0} games as Installed.", setAsInstalledCount);
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
             }
@@ -309,14 +325,8 @@ namespace NVIDIAGeForceNowEnabler
 
         public void LibraryRemoveAllPlayActions()
         {
-            List<Guid> supportedLibraries = new List<Guid>() {
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.UplayLibrary)
-            };
             int playActionRemovedCount = 0;
-            var gameDatabase = PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
+            var gameDatabase = GetGamesSupportedLibraries();
             foreach (var game in gameDatabase)
             {
                 GameAction geforceNowAction = null;
@@ -330,7 +340,7 @@ namespace NVIDIAGeForceNowEnabler
                     game.OtherActions.Remove(geforceNowAction);
                     PlayniteApi.Database.Games.Update(game);
                     playActionRemovedCount++;
-                    logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action removed from {0}", game.Name));
+                    logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action removed from \"{0}\"", game.Name));
                 }
             }
             string results = String.Format("Play Action removed from {0} games", playActionRemovedCount);
