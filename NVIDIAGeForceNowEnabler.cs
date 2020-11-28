@@ -37,7 +37,7 @@ namespace NVIDIAGeForceNowEnabler
 
         public override void OnLibraryUpdated()
         {
-            if (settings.ExecuteOnStartup == true)
+            if (settings.ExecuteOnLibraryUpdate == true)
             {
                 MainMethod(false);
             }
