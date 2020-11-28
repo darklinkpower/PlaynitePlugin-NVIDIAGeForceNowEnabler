@@ -176,6 +176,8 @@ namespace NVIDIAGeForceNowEnabler
         {
             List<GeforceGame> supportedGames = new List<GeforceGame>();
 
+            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
+
             try
             {
                 WebClient webClient = new WebClient();
@@ -186,7 +188,6 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     supportedGame.title = Regex.Replace(supportedGame.title, @"[^\p{L}\p{Nd}]", "").ToLower();
                 }
-                return supportedGames;
             }
             catch (Exception e)
             {
@@ -195,8 +196,9 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     PlayniteApi.Dialogs.ShowErrorMessage(e.Message, "NVIDIA GeForce NOW Enabler");
                 }
-                return supportedGames;
-            }
+            } }, new GlobalProgressOptions("Downloading NVIDIA GeForce Now database"));
+            
+            return supportedGames;
         }
 
         public IEnumerable<Game> GetGamesSupportedLibraries()
@@ -239,6 +241,8 @@ namespace NVIDIAGeForceNowEnabler
             int playActionRemovedCount = 0;
             int setAsInstalledCount = 0;
             int setAsUninstalledCount = 0;
+
+            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
 
             var gameDatabase = GetGamesSupportedLibraries();
             foreach (var game in gameDatabase)
@@ -314,7 +318,8 @@ namespace NVIDIAGeForceNowEnabler
                         logger.Info(String.Format("NVIDIA GeForce NOW Enabler - Play Action removed from \"{0}\"", game.Name));
                     }
                 }
-            }
+            } }, new GlobalProgressOptions("Updating NVIDIA GeForce NOW Enabled games"));
+
             if (showDialogs == true)
             {
                 string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}\n\nAdded \"{1}\" feature to {2} games.\nRemoved \"{3}\" feature from {4} games.",
