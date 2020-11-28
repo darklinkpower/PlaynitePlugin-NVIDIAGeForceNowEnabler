@@ -284,7 +284,7 @@ namespace NVIDIAGeForceNowEnabler
             if (showDialogs == true)
             {
                 string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}\n\nAdded \"{1}\" feature to {2} games\nRemoved \"{3}\" feature from {4} games",
-                    enabledGamesCount, featureName, playActionAddedCount, featureName, playActionRemovedCount);
+                    enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
                 if (settings.UpdatePlayActions == true)
                 {
                     results += String.Format("\n\nPlay Action added to {0} games\nPlay Action removed from {1} games",
