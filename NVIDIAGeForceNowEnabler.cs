@@ -60,7 +60,7 @@ namespace NVIDIAGeForceNowEnabler
                 new MainMenuItem
                 {
                     Description = "Update enabled status of games",
-                    MenuSection = "@Nvidia GeForce NOW Enabler",
+                    MenuSection = "@NVIDIA GeForce NOW Enabler",
                     Action = args => {
                         MainMethod(true);
                     }
@@ -68,7 +68,7 @@ namespace NVIDIAGeForceNowEnabler
                 new MainMenuItem
                 {
                     Description = "Remove Play Action from all games",
-                    MenuSection = "@Nvidia GeForce NOW Enabler",
+                    MenuSection = "@NVIDIA GeForce NOW Enabler",
                     Action = args => {
                         LibraryRemoveAllPlayActions();
                     }
