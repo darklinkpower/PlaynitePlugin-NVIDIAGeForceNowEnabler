@@ -233,7 +233,7 @@ namespace NVIDIAGeForceNowEnabler
             var supportedSteamGames = supportedGames.Where(g => g.store == "Steam");
             var supportedEpicGames = supportedGames.Where(g => g.store == "Epic");
             var supportedOriginGames = supportedGames.Where(g => g.store == "Origin");
-            var supportedUplayGames = supportedGames.Where(g => g.store == "UPLAY");
+            var supportedUplayGames = supportedGames.Where(g => g.store == "Ubisoft Connect");
 
             int enabledGamesCount = 0; 
             int featureAddedCount = 0;
