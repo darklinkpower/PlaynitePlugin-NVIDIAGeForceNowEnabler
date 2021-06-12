@@ -155,7 +155,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 GameAction nvidiaGameAction = new GameAction();
                 nvidiaGameAction.Name = "Launch in Nvidia GeForce NOW";
-                var playActionArguments = String.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGame.id);
+                var playActionArguments = String.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGame.Id);
                 nvidiaGameAction.Arguments = playActionArguments;
                 nvidiaGameAction.Path = geforceNowExecutablePath;
                 nvidiaGameAction.WorkingDir = geforceNowWorkingPath;
@@ -186,7 +186,7 @@ namespace NVIDIAGeForceNowEnabler
                         supportedGames = JsonConvert.DeserializeObject<List<GeforceGame>>(downloadedString);
                         foreach (var supportedGame in supportedGames)
                         {
-                            supportedGame.title = Regex.Replace(supportedGame.title, @"[^\p{L}\p{Nd}]", "").ToLower();
+                            supportedGame.Title = Regex.Replace(supportedGame.Title, @"[^\p{L}\p{Nd}]", "").ToLower();
                         }
                     }
                     catch (Exception e)
@@ -230,10 +230,10 @@ namespace NVIDIAGeForceNowEnabler
             {
                 return;
             }
-            var supportedSteamGames = supportedGames.Where(g => g.store == "Steam");
-            var supportedEpicGames = supportedGames.Where(g => g.store == "Epic");
-            var supportedOriginGames = supportedGames.Where(g => g.store == "Origin");
-            var supportedUplayGames = supportedGames.Where(g => g.store == "Ubisoft Connect");
+            var supportedSteamGames = supportedGames.Where(g => g.Store == "Steam");
+            var supportedEpicGames = supportedGames.Where(g => g.Store == "Epic");
+            var supportedOriginGames = supportedGames.Where(g => g.Store == "Origin");
+            var supportedUplayGames = supportedGames.Where(g => g.Store == "Ubisoft Connect");
 
             int enabledGamesCount = 0; 
             int featureAddedCount = 0;
@@ -254,16 +254,16 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     case BuiltinExtension.SteamLibrary:
                         var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
-                        supportedGame = supportedSteamGames.Where(g => g.steamUrl == steamUrl).FirstOrDefault();
+                        supportedGame = supportedSteamGames.Where(g => g.SteamUrl == steamUrl).FirstOrDefault();
                         break;
                     case BuiltinExtension.EpicLibrary:
-                        supportedGame = supportedEpicGames.Where(g => g.title == gameName).FirstOrDefault();
+                        supportedGame = supportedEpicGames.Where(g => g.Title == gameName).FirstOrDefault();
                         break;
                     case BuiltinExtension.OriginLibrary:
-                        supportedGame = supportedOriginGames.Where(g => g.title == gameName).FirstOrDefault();
+                        supportedGame = supportedOriginGames.Where(g => g.Title == gameName).FirstOrDefault();
                         break;
                     case BuiltinExtension.UplayLibrary:
-                        supportedGame = supportedUplayGames.Where(g => g.title == gameName).FirstOrDefault();
+                        supportedGame = supportedUplayGames.Where(g => g.Title == gameName).FirstOrDefault();
                         break;
                     default:
                         break;

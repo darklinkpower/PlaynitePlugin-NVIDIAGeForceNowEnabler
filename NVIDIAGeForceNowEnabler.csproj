@@ -52,7 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeforceGame.cs" />
+    <Compile Include="Models\GeforceGame.cs" />
     <Compile Include="NVIDIAGeForceNowEnabler.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerSettings.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerSettingsView.xaml.cs">
