@@ -222,9 +222,8 @@ namespace NVIDIAGeForceNowEnabler
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
 
             string localAppData = Environment.GetEnvironmentVariable("LocalAppData");
-            string[] paths = { localAppData, "NVIDIA Corporation", "GeForceNOW", "CEF" };
-            string geforceNowWorkingPath = Path.Combine(paths);
-            string geforceNowExecutablePath = geforceNowWorkingPath + "\\GeForceNOWStreamer.exe";
+            string geforceNowWorkingPath = Path.Combine(localAppData, "NVIDIA Corporation", "GeForceNOW", "CEF");
+            string geforceNowExecutablePath = Path.Combine(geforceNowWorkingPath, "GeForceNOWStreamer.exe");
             
             var supportedGames = DownloadGameList("https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json", showDialogs);
             if (supportedGames.Count() == 0)
