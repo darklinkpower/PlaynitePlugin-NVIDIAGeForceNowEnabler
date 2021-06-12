@@ -174,29 +174,31 @@ namespace NVIDIAGeForceNowEnabler
 
         public List<GeforceGame> DownloadGameList(string uri, bool showDialogs)
         {
-            List<GeforceGame> supportedGames = new List<GeforceGame>();
+            var supportedGames = new List<GeforceGame>();
 
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
-
-            try
-            {
-                WebClient webClient = new WebClient();
-                webClient.Encoding = Encoding.UTF8;
-                string downloadedString = webClient.DownloadString(uri);
-                supportedGames = JsonConvert.DeserializeObject<List<GeforceGame>>(downloadedString);
-                foreach (var supportedGame in supportedGames)
+                using (var webClient = new WebClient())
                 {
-                    supportedGame.title = Regex.Replace(supportedGame.title, @"[^\p{L}\p{Nd}]", "").ToLower();
+                    try
+                    {
+                        webClient.Encoding = Encoding.UTF8;
+                        string downloadedString = webClient.DownloadString(uri);
+                        supportedGames = JsonConvert.DeserializeObject<List<GeforceGame>>(downloadedString);
+                        foreach (var supportedGame in supportedGames)
+                        {
+                            supportedGame.title = Regex.Replace(supportedGame.title, @"[^\p{L}\p{Nd}]", "").ToLower();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error(e, e.Message);
+                        if (showDialogs == true)
+                        {
+                            PlayniteApi.Dialogs.ShowErrorMessage(e.Message, "NVIDIA GeForce NOW Enabler");
+                        }
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, e.Message);
-                if (showDialogs == true)
-                {
-                    PlayniteApi.Dialogs.ShowErrorMessage(e.Message, "NVIDIA GeForce NOW Enabler");
-                }
-            } }, new GlobalProgressOptions("Downloading NVIDIA GeForce Now database"));
+            }, new GlobalProgressOptions("Downloading NVIDIA GeForce Now database..."));
             
             return supportedGames;
         }
