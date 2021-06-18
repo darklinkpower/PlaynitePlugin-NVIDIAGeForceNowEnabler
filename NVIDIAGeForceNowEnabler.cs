@@ -205,11 +205,13 @@ namespace NVIDIAGeForceNowEnabler
 
         public IEnumerable<Game> GetGamesSupportedLibraries()
         {
-            List<Guid> supportedLibraries = new List<Guid>() {
+            List<Guid> supportedLibraries = new List<Guid>()
+            {
                 BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary),
                 BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary),
                 BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.UplayLibrary)
+                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.UplayLibrary),
+                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.GogLibrary)
             };
 
             var gameDatabase = PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
@@ -234,6 +236,7 @@ namespace NVIDIAGeForceNowEnabler
             var supportedEpicGames = supportedGames.Where(g => g.Store == "Epic");
             var supportedOriginGames = supportedGames.Where(g => g.Store == "Origin");
             var supportedUplayGames = supportedGames.Where(g => g.Store == "Ubisoft Connect");
+            var supportedGogGames = supportedGames.Where(g => g.Store == "GOG");
 
             int enabledGamesCount = 0; 
             int featureAddedCount = 0;
@@ -265,6 +268,9 @@ namespace NVIDIAGeForceNowEnabler
                     case BuiltinExtension.UplayLibrary:
                         supportedGame = supportedUplayGames.Where(g => g.Title == gameName).FirstOrDefault();
                         break;
+                    case BuiltinExtension.GogLibrary:
+                        supportedGame = supportedGogGames.Where(g => g.Title == gameName).FirstOrDefault();
+                        break;
                     default:
                         break;
                 }
@@ -286,8 +292,7 @@ namespace NVIDIAGeForceNowEnabler
                         }
                     }
                 }
-                
-                if (supportedGame != null)
+                else
                 {
                     enabledGamesCount++;
                     bool featureAdded = AddFeature(game, feature);
